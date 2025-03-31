@@ -1,0 +1,29 @@
+# version: 3.8
+services:
+  todo-application:
+    image: todo-application-image:latest
+    ports:
+      - "8082:8081"
+    networks:
+      - todo-network
+    depends_on:
+      - mysql-db
+    restart: always
+  mysql-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "Root@123"
+      MYSQL_DATABASE: "tododb"
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - todo-network
+    container_name: mysql-db
+networks:
+  todo-network:
+    driver: bridge
+volumes:
+  mysql-data:
+    
